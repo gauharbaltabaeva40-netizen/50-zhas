@@ -92,19 +92,39 @@ footer{background:#09271f;color:#d6c99f;text-align:center;padding:34px 20px;font
    <label for="people">Қонақ саны</label><select id="people" name="people"><option>1 адам</option><option>2 адам</option><option>3 адам</option><option>4 адам</option><option>5 немесе одан көп</option></select>
    <label for="message">Қосымша хабарлама (міндетті емес)</label><textarea id="message" name="message" placeholder="Ізгі тілегіңіз..."></textarea>
    <button class="btn" type="submit">ЖАУАПТЫ WHATSAPP-ПЕН ЖІБЕРУ ↗</button>
-   <p class="note">Ескерту: растау WhatsApp-та дайын хабарлама ретінде ашылады. Жіберу үшін WhatsApp-тағы «Жіберу» батырмасын басыңыз. Төменде нөмірді сайт иесімен ауыстыру қажет.</p>
   </form>
  </div>
 </section>
 <footer>Мейрамбек & Индира <div style="font-family:Manrope,sans-serif;font-size:10px;letter-spacing:.25em;margin-top:12px">50 ЖАС МЕРЕЙ ТОЙ · 07.11.2026</div></footer>
+
+<audio id="bgMusic" loop src="music.mp3"></audio>
 <button class="music" id="musicBtn" aria-label="Әуенді қосу/өшіру" title="Әуенді қосу/өшіру">♫</button>
+
 <script>
 const eventDate = new Date('2026-11-07T18:00:00+05:00').getTime();
 function tick(){let diff=eventDate-Date.now();if(diff<0)diff=0;const vals={days:Math.floor(diff/86400000),hours:Math.floor(diff%86400000/3600000),minutes:Math.floor(diff%3600000/60000),seconds:Math.floor(diff%60000/1000)};for(const [id,v] of Object.entries(vals)){const el=document.getElementById(id);if(el)el.textContent=String(v).padStart(2,'0')}}
 tick();setInterval(tick,1000);
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.fade').forEach(el=>observer.observe(el));
-document.getElementById('rsvpForm').addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.currentTarget);const text=`Сәлеметсіз бе! Мейрамбек пен Индираның 50 жас мерейтойына қатысты жауап:\nЕсімі: ${d.get('guest')}\nҚатысуы: ${d.get('attendance')}\nҚонақ саны: ${d.get('people')}\nХабарлама: ${d.get('message')||'Жоқ'}`;const phone='';if(!phone){alert('Сайтты жариялар алдында WhatsApp нөмірін кодтағы phone айнымалысына енгізу керек. Қазір хабарлама мәтіні дайындалады.');}window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(text),'_blank','noopener');});
-/* Music requires a chosen audio file. Browser autoplay is blocked; connect a licensed audio track here when available. */
-document.getElementById('musicBtn').addEventListener('click',()=>alert('Фондық әуенді қосу үшін таңдаған музыка файлын сайтқа қосу қажет. Қазір дыбыс файлы берілмеген.'));
+
+document.getElementById('rsvpForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const d=new FormData(e.currentTarget);
+  const text=`Сәлеметсіз бе! Мейрамбек пен Индираның 50 жас мерейтойына қатысты жауап:\nЕсімі: ${d.get('guest')}\nҚатысуы: ${d.get('attendance')}\nҚонақ саны: ${d.get('people')}\nХабарлама: ${d.get('message')||'Жоқ'}`;
+  const phone='77053989176';
+  window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(text),'_blank','noopener');
+});
+
+const audio = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+
+musicBtn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    musicBtn.style.opacity = '1';
+  } else {
+    audio.pause();
+    musicBtn.style.opacity = '0.6';
+  }
+});
 </script>
 </body></html>
